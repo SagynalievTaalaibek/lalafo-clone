@@ -3,9 +3,10 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import {
   selectCategory,
   selectCategoryItem,
+  selectFetchCategoryLoading,
 } from '../../categories/categoriesSlice';
 import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { CategoryI } from '../../../types';
 
 const style = {
@@ -19,6 +20,7 @@ const style = {
 const MenuBar = () => {
   const dispatch = useAppDispatch();
   const categoryData = useAppSelector(selectCategory);
+  const categoryFetchLoading = useAppSelector(selectFetchCategoryLoading);
   const navigate = useNavigate();
 
   const onSelectItem = (category: CategoryI) => {
@@ -35,11 +37,19 @@ const MenuBar = () => {
         >
           All items
         </Button>
-        {categoryData.map((page) => (
-          <Button key={page._id} sx={style} onClick={() => onSelectItem(page)}>
-            {page.category}
-          </Button>
-        ))}
+        {categoryFetchLoading ? (
+          <CircularProgress />
+        ) : (
+          categoryData.map((page) => (
+            <Button
+              key={page._id}
+              sx={style}
+              onClick={() => onSelectItem(page)}
+            >
+              {page.category}
+            </Button>
+          ))
+        )}
       </Box>
     </>
   );

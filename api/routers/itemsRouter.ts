@@ -1,5 +1,5 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import Item from '../models/Item';
 import auth, { RequestWithUser } from '../middleware/auth';
 import { imagesUpload } from '../multer';
@@ -60,4 +60,25 @@ itemsRouter.get('/', async (req, res, next) => {
     next(e);
   }
 });
+
+itemsRouter.get('/:id', async (req, res, next) => {
+  try {
+    let _id: Types.ObjectId;
+    try {
+      _id = new Types.ObjectId(req.params.id);
+    } catch {
+      return res.status(404).send({ error: 'Wrong ObjectId!' });
+    }
+
+    const results = await Item.findById(_id).populate({
+      path: 'category seller',
+      select: '-_id category phone displayName',
+    });
+
+    res.send(results);
+  } catch (e) {
+    next(e);
+  }
+});
+
 export default itemsRouter;
