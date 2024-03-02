@@ -11,6 +11,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { usersReducer } from '../features/users/usersSlice';
+import { categoryReducer } from '../features/categories/categoriesSlice';
 
 const usersPersistConfig = {
   key: 'lalafo:users',
@@ -20,6 +21,7 @@ const usersPersistConfig = {
 
 const rootReducer = combineReducers({
   users: persistReducer(usersPersistConfig, usersReducer),
+  categories: categoryReducer,
 });
 
 export const store = configureStore({

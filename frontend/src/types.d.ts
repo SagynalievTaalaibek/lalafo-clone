@@ -38,3 +38,8 @@ export interface LoginMutation {
 export interface GlobalError {
   error: string;
 }
+
+export interface CategoryI {
+  _id: string;
+  category: string;
+}
