@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import { login, register } from './usersThunks';
 import { GlobalError, User, ValidationError } from '../../types';
-import { register } from './usersThunks';
 
 interface UsersState {
   user: User | null;
@@ -22,7 +22,11 @@ const initialState: UsersState = {
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    unsetUser: (state) => {
+      state.user = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
@@ -32,13 +36,26 @@ export const usersSlice = createSlice({
         state.registerLoading = false;
         state.user = payload.user;
       })
-      .addCase(register.pending, (state, { payload: error }) => {
+      .addCase(register.rejected, (state, { payload: error }) => {
         state.registerLoading = false;
         state.registerError = error || null;
+      });
+    builder
+      .addCase(login.pending, (state) => {
+        state.loginLoading = true;
+      })
+      .addCase(login.fulfilled, (state, { payload }) => {
+        state.loginLoading = false;
+        state.user = payload.user;
+      })
+      .addCase(login.rejected, (state, { payload: error }) => {
+        state.loginLoading = false;
+        state.loginError = error || null;
       });
   },
 });
 
+export const { unsetUser } = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;
 export const selectUser = (state: RootState) => state.users.user;
 export const selectRegisterLoading = (state: RootState) =>
