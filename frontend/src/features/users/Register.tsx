@@ -44,8 +44,8 @@ const Register = () => {
     try {
       await dispatch(register(state)).unwrap();
       navigate('/');
-    } catch (e: any) {
-      alert(e.message);
+    } catch (e) {
+      console.error(e);
     }
   };
 
