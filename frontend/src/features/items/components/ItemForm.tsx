@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAppSelector } from '../../../app/hooks';
 import { selectCategory } from '../../categories/categoriesSlice';
+import { selectItemsCreateLoading } from '../itemsSlice';
 import {
   FormControl,
   Grid,
@@ -20,7 +21,7 @@ interface Props {
 }
 
 const ItemForm: React.FC<Props> = ({ onSubmit }) => {
-  const isLoading = false;
+  const isLoading = useAppSelector(selectItemsCreateLoading);
   const categories = useAppSelector(selectCategory);
   const [state, setState] = useState<ItemMutation>({
     title: '',

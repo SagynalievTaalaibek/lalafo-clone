@@ -72,10 +72,26 @@ itemsRouter.get('/:id', async (req, res, next) => {
 
     const results = await Item.findById(_id).populate({
       path: 'category seller',
-      select: '-_id category phone displayName',
+      select: '_id category phone displayName',
     });
 
     res.send(results);
+  } catch (e) {
+    next(e);
+  }
+});
+
+itemsRouter.delete('/:id', async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    const deletedItem = await Item.findByIdAndDelete(id);
+
+    if (!deletedItem) {
+      return res.status(404).send({ error: 'Item not found!' });
+    }
+
+    res.send({ message: 'Item deleted!' });
   } catch (e) {
     next(e);
   }

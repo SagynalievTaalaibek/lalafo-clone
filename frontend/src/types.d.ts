@@ -61,3 +61,19 @@ export interface ItemsMainWindow {
     category: string;
   };
 }
+
+export interface OneItemI {
+  _id: string;
+  title: string;
+  price: string;
+  image: string;
+  description: string;
+  category: {
+    category: string;
+  };
+  seller: {
+    _id: string;
+    displayName: string;
+    phone: string;
+  };
+}

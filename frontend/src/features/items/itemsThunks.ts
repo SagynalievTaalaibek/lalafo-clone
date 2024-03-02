@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import axiosApi from '../../axiosApi';
-import { ItemMutation, ItemsMainWindow } from '../../types';
+import { ItemMutation, ItemsMainWindow, OneItemI } from '../../types';
 
 export const createItems = createAsyncThunk<
   void,
@@ -33,5 +33,20 @@ export const fetchItems = createAsyncThunk<ItemsMainWindow[], string>(
       `/items/?category=${id}`,
     );
     return response.data;
+  },
+);
+
+export const fetchOneItem = createAsyncThunk<OneItemI, string>(
+  'item/fetchOne',
+  async (id) => {
+    const response = await axiosApi.get<OneItemI>(`/items/${id}`);
+    return response.data;
+  },
+);
+
+export const deleteItem = createAsyncThunk<void, string>(
+  'item/delete',
+  async (id) => {
+    await axiosApi.delete(`/items/${id}`);
   },
 );

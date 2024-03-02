@@ -1,19 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { createItems, fetchItems } from './itemsThunks';
-import { ItemsMainWindow } from '../../types';
+import {
+  createItems,
+  deleteItem,
+  fetchItems,
+  fetchOneItem,
+} from './itemsThunks';
+import { ItemsMainWindow, OneItemI } from '../../types';
 
 interface ItemsState {
   items: ItemsMainWindow[];
+  oneItem: OneItemI | null;
   createItemsLoading: boolean;
   fetchItemsLoading: boolean;
-  deleteItemsLoading: boolean | string;
+  fetchOneItemLoading: boolean;
+  deleteItemsLoading: boolean;
 }
 
 const initialState: ItemsState = {
   items: [],
+  oneItem: null,
   createItemsLoading: false,
   fetchItemsLoading: false,
+  fetchOneItemLoading: false,
   deleteItemsLoading: false,
 };
 
@@ -43,14 +52,38 @@ export const itemSlice = createSlice({
       .addCase(fetchItems.rejected, (state) => {
         state.fetchItemsLoading = false;
       });
+    builder
+      .addCase(fetchOneItem.pending, (state) => {
+        state.fetchOneItemLoading = true;
+      })
+      .addCase(fetchOneItem.fulfilled, (state, { payload }) => {
+        state.fetchOneItemLoading = false;
+        state.oneItem = payload;
+      })
+      .addCase(fetchOneItem.rejected, (state) => {
+        state.fetchOneItemLoading = false;
+      });
+    builder
+      .addCase(deleteItem.pending, (state) => {
+        state.deleteItemsLoading = true;
+      })
+      .addCase(deleteItem.fulfilled, (state) => {
+        state.deleteItemsLoading = false;
+      })
+      .addCase(deleteItem.rejected, (state) => {
+        state.deleteItemsLoading = false;
+      });
   },
 });
 
 export const itemReducer = itemSlice.reducer;
 export const selectItems = (state: RootState) => state.items.items;
+export const selectOneItem = (state: RootState) => state.items.oneItem;
 export const selectItemsFetchLoading = (state: RootState) =>
   state.items.fetchItemsLoading;
 export const selectItemsCreateLoading = (state: RootState) =>
   state.items.createItemsLoading;
 export const selectItemsDeleteLoading = (state: RootState) =>
   state.items.deleteItemsLoading;
+export const selectFetchOneItemLoading = (state: RootState) =>
+  state.items.fetchOneItemLoading;

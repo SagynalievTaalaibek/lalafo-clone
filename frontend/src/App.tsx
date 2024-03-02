@@ -8,6 +8,7 @@ import Login from './features/users/Login';
 import NotFound from './components/NotFound';
 import NewItems from './features/items/NewItems';
 import Items from './features/items/Items';
+import OneItem from './features/items/oneItem';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -23,6 +24,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Items />} />
             <Route path="/:id" element={<Items />} />
+            <Route path="/items/:id" element={<OneItem />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             {user ? <Route path="/add-new-item" element={<NewItems />} /> : ''}
