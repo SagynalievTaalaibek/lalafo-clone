@@ -32,4 +32,32 @@ itemsRouter.post(
     }
   },
 );
+
+itemsRouter.get('/', async (req, res, next) => {
+  try {
+    const category = req.query.category;
+
+    if (category) {
+      const items = await Item.find({ category })
+        .select('_id, title price image')
+        .populate({
+          path: 'category',
+          select: '-_id category',
+        });
+
+      res.send(items);
+    }
+
+    const results = await Item.find()
+      .select('_id, title price image')
+      .populate({
+        path: 'category',
+        select: '-_id category',
+      });
+
+    res.send(results);
+  } catch (e) {
+    next(e);
+  }
+});
 export default itemsRouter;
