@@ -94,19 +94,21 @@ const Register = () => {
               <TextField
                 name="displayName"
                 label="Diplay name"
-                required
                 value={state.displayName}
                 onChange={inputChangeHandler}
+                error={Boolean(getFieldError('displayName'))}
+                helperText={getFieldError('displayName')}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 name="phone"
                 label="Phone"
-                required
                 type="tel"
                 value={state.phone}
                 onChange={inputChangeHandler}
+                error={Boolean(getFieldError('phone'))}
+                helperText={getFieldError('phone')}
               />
             </Grid>
           </Grid>
