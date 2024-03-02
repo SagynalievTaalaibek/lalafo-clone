@@ -47,7 +47,7 @@ const Items = () => {
           <Grid container spacing={2}>
             {fetchItemLoading ? (
               <CircularProgress />
-            ) : (
+            ) : items.length > 0 ? (
               items.map((value) => (
                 <ItemCard
                   key={value._id}
@@ -57,6 +57,19 @@ const Items = () => {
                   image={value.image}
                 />
               ))
+            ) : (
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: 'bolder',
+                  mt: 2,
+                  marginLeft: '30px',
+                  color: 'red',
+                }}
+                component="div"
+              >
+                No Items!!!
+              </Typography>
             )}
           </Grid>
         </Grid>

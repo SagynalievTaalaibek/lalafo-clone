@@ -44,9 +44,13 @@ export const fetchOneItem = createAsyncThunk<OneItemI, string>(
   },
 );
 
-export const deleteItem = createAsyncThunk<void, string>(
+export const deleteItem = createAsyncThunk<void, string, { state: RootState }>(
   'item/delete',
-  async (id) => {
-    await axiosApi.delete(`/items/${id}`);
+  async (id, { getState }) => {
+    const token = getState().users.user?.token;
+
+    await axiosApi.delete(`/items/${id}`, {
+      headers: { Authorization: 'Bearer ' + token },
+    });
   },
 );

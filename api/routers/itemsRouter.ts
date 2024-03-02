@@ -81,16 +81,22 @@ itemsRouter.get('/:id', async (req, res, next) => {
   }
 });
 
-itemsRouter.delete('/:id', async (req, res, next) => {
+itemsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
   try {
     const id = req.params.id;
+    const userId = req.user?._id;
 
-    const deletedItem = await Item.findByIdAndDelete(id);
+    const item = await Item.findById(id);
 
-    if (!deletedItem) {
-      return res.status(404).send({ error: 'Item not found!' });
+    if (!item) {
+      return res.status(404).send({ error: 'Item not found' });
     }
 
+    if (!item.seller.equals(userId)) {
+      return res.status(403).send({ error: 'You cannot delete items!' });
+    }
+
+    await Item.deleteOne({ _id: id });
     res.send({ message: 'Item deleted!' });
   } catch (e) {
     next(e);
