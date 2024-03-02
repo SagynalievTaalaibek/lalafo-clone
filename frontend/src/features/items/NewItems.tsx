@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
+import { createItems } from './itemsThunks';
 import { fetchCategory } from '../categories/categoriesThunks';
 import Typography from '@mui/material/Typography';
 import ItemForm from './components/ItemForm';
 import { ItemMutation } from '../../types';
-import { createItems } from './itemsThunks';
 
 const NewItems = () => {
   const dispatch = useAppDispatch();

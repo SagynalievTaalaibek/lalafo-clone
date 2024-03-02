@@ -8,7 +8,7 @@ import Login from './features/users/Login';
 import NotFound from './components/NotFound';
 import NewItems from './features/items/NewItems';
 import Items from './features/items/Items';
-import OneItem from './features/items/oneItem';
+import OneItem from './features/items/OneItem';
 
 const App = () => {
   const user = useAppSelector(selectUser);
