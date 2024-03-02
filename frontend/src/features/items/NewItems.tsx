@@ -5,6 +5,7 @@ import { fetchCategory } from '../categories/categoriesThunks';
 import Typography from '@mui/material/Typography';
 import ItemForm from './components/ItemForm';
 import { ItemMutation } from '../../types';
+import { createItems } from './itemsThunks';
 
 const NewItems = () => {
   const dispatch = useAppDispatch();
@@ -14,9 +15,8 @@ const NewItems = () => {
     dispatch(fetchCategory());
   }, [dispatch]);
 
-  const onSubmit = (itemData: ItemMutation) => {
-    console.log(itemData);
-
+  const onSubmit = async (itemData: ItemMutation) => {
+    await dispatch(createItems(itemData));
     navigate('/');
   };
 
