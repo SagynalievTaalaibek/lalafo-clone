@@ -1,22 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { fetchCategory } from './categoriesThunks';
 import { CategoryI } from '../../types';
 
 interface CategoriesState {
   category: CategoryI[];
+  selectCategory: string | null;
   fetchLoading: boolean;
 }
 
 const initialState: CategoriesState = {
   category: [],
+  selectCategory: null,
   fetchLoading: false,
 };
 
 export const categorySlice = createSlice({
   name: 'categories',
   initialState,
-  reducers: {},
+  reducers: {
+    selectCategoryItem: (state, action: PayloadAction<string>) => {
+      state.selectCategory = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCategory.pending, (state) => {
@@ -31,6 +37,10 @@ export const categorySlice = createSlice({
       });
   },
 });
+
+export const { selectCategoryItem } = categorySlice.actions;
+export const selectMenuCategory = (state: RootState) =>
+  state.categories.selectCategory;
 
 export const categoryReducer = categorySlice.reducer;
 export const selectCategory = (state: RootState) => state.categories.category;

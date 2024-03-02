@@ -22,6 +22,7 @@ const App = () => {
         <Container maxWidth="xl" sx={{ mt: 1 }}>
           <Routes>
             <Route path="/" element={<Items />} />
+            <Route path="/:id" element={<Items />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             {user ? <Route path="/add-new-item" element={<NewItems />} /> : ''}
