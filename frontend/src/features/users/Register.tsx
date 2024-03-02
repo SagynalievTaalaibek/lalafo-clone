@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { register } from './usersThunks';
+import { selectRegisterError, selectRegisterLoading } from './usersSlice';
 import { Avatar, Container, Grid, Link, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
-import { selectRegisterError, selectRegisterLoading } from './usersSlice';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import Typography from '@mui/material/Typography';
@@ -11,6 +12,8 @@ import { LoadingButton } from '@mui/lab';
 import { RegisterMutation } from '../../types';
 
 const Register = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const registerLoading = useAppSelector(selectRegisterLoading);
   const registerError = useAppSelector(selectRegisterError);
   const [state, setState] = useState<RegisterMutation>({
@@ -39,10 +42,8 @@ const Register = () => {
   const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      /*await dispatch(register(state)).unwrap();
-      navigate('/');*/
-
-      console.log(state);
+      await dispatch(register(state)).unwrap();
+      navigate('/');
     } catch (e) {
       console.error(e);
     }
