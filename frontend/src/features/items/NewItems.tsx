@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { fetchCategory } from '../categories/categoriesThunks';
 import Typography from '@mui/material/Typography';
 import ItemForm from './components/ItemForm';
 import { ItemMutation } from '../../types';
-import { useNavigate } from 'react-router-dom';
 
 const NewItems = () => {
   const dispatch = useAppDispatch();

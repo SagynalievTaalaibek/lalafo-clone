@@ -51,3 +51,10 @@ export interface ItemMutation {
   image: string | null;
   category: string;
 }
+
+export interface ItemsMainWindow {
+  title: string;
+  image: string;
+  price: string;
+  category: string;
+}
