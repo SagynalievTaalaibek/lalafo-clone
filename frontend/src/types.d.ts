@@ -1,12 +1,16 @@
 export interface RegisterMutation {
   username: string;
   password: string;
+  displayName: string;
+  phone: string;
 }
 
 export interface User {
   _id: string;
   username: string;
   token: string;
+  displayName: string;
+  phone: string;
 }
 
 export interface ValidationError {
@@ -22,7 +26,6 @@ export interface ValidationError {
 }
 
 export interface RegisterResponse {
-  message: string;
   user: User;
 }
 

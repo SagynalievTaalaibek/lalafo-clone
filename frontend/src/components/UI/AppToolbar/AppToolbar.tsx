@@ -1,4 +1,8 @@
 import { NavLink } from 'react-router-dom';
+import { useAppSelector } from '../../../app/hooks';
+import { selectUser } from '../../../features/users/usersSlice';
+import UserMenu from './UserMenu';
+import AnonymousMenu from './AnonymousMenu';
 import { AppBar, Grid, styled, Toolbar, Typography } from '@mui/material';
 
 const Link = styled(NavLink)({
@@ -10,7 +14,7 @@ const Link = styled(NavLink)({
 });
 
 const AppToolbar = () => {
-  // const user = useAppSelector(selectUser);
+  const user = useAppSelector(selectUser);
 
   return (
     <AppBar position="sticky" sx={{ mb: 2 }}>
@@ -19,7 +23,7 @@ const AppToolbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to="/">Flea market</Link>
           </Typography>
-          {/* {user ? <UserMenu user={user} /> : <AnonymousMenu />}*/}
+          {user ? <UserMenu user={user} /> : <AnonymousMenu />}
         </Grid>
       </Toolbar>
     </AppBar>
